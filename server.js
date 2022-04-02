@@ -24,6 +24,7 @@ app.use(
 
 // Routes
 app.use("/api", require("./routes/projectRouter"));
+app.use("/api", require("./routes/leadRouter"));
 app.use("/", require("./routes/upload"));
 
 const start = async () => {

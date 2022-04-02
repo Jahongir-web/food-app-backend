@@ -14,7 +14,7 @@ router.post("/upload", (req, res) => {
       return res.error.noUpload(res);
 
     const file = req.files.file;
-    if (file.size > 5 * 1024 * 1024) {
+    if (file.size > 15 * 1024 * 1024) {
       removeTmp(file.tempFilePath);
       return res.error.invalidSize(res);
     }
@@ -26,7 +26,7 @@ router.post("/upload", (req, res) => {
 
     cloudinary.v2.uploader.upload(
       file.tempFilePath,
-      { folder: "Kvadrat metr" },
+      { folder: "Food app" },
       async (err, result) => {
         if (err) throw err;
 
