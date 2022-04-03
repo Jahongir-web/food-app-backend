@@ -22,8 +22,19 @@ app.use(
   })
 );
 
+app.use((_, res, next) => {
+
+	res.set({
+		'Access-Control-Allow-Origin': '*',
+		'Access-Control-Allow-Headers': 'Content-Type, access_token',
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
+	})
+
+	next()
+})
+
 // Routes
-app.use("/api", require("./routes/projectRouter"));
+app.use("/api", require("./routes/foodRouter"));
 app.use("/api", require("./routes/leadRouter"));
 app.use("/", require("./routes/upload"));
 
