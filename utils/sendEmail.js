@@ -1,29 +1,39 @@
-import nodemailer from "nodemailer";
+const nodemailer = require("nodemailer");
+const mailGun = require('nodemailer-mailgun-transport')
 
 const sendEmail = async (options) => {
   try {
-    const transporter = await nodemailer.createTransport({
-      service: "hotmail",
+    const auth = {
       auth: {
-        user: "jahongirmh@gmail.com",
-        pass: "7008779a",
-      },
-      from: "jahongirmh@gmail.com",
-    });
+        api_key: process.env.API_KEY,
+        domain: process.env.DOMAIN
+      }
+    }
+
+    const transporter = await nodemailer.createTransport(mailGun(auth))
 
     const mailOptions = {
-      from: "jahongirmh@gmail.com",
+      from: options.from,
       to: options.to,
       subject: options.subject,
       html: options.text,
     };
 
-    const result = await transporter.sendMail(mailOptions);
 
-    return { info: result, err };
+    const result = await transporter.sendMail(mailOptions, (err, data) => {
+      if(err){
+        console.log("Error occurs");
+      } else {
+        console.log("Message sent!!!");
+      }
+    })
+
+    return result
+
   } catch (err) {
-    return { err, info };
+    return { err};
   }
 };
 
-export default sendEmail;
+module.exports = sendEmail;
+

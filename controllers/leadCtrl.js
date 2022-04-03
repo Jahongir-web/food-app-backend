@@ -1,38 +1,44 @@
-const sgMail = require('@sendgrid/mail')
+// const sgMail = require('@sendgrid/mail')
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+// sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
-const sendMail = async (msg) => {
-  try {
-    await sgMail.send(msg)
-    console.log("Message sent successfully!");
-  } catch (error) {
-    console.error(error);
+// const sendMail = async (msg) => {
+//   try {
+//     await sgMail.send(msg)
+//     console.log("Message sent successfully!");
+//   } catch (error) {
+//     console.error(error);
 
-    if(error.response) {
-      console.error(error.response.body);
-    }
-  }
-}
+//     if(error.response) {
+//       console.error(error.response.body);
+//     }
+//   }
+// }
+
+const sendEmail = require('../utils/sendEmail')
 
 const leadCtrl = {
   getLeads: async (req, res) => {
+    const message = `
+      <h3>User: John Doe</h3>
+      <h3>Phone: +961252602<h3/>
+      <h3>Email: <a href="mailto:kia@gmail.com">kia@gmail.com</a><h3/>
+      <h3>Message ✉</h3>
+      <p>Please go to this link to log In your account</p>      
+      `
     try {
-      sendMail({
-        to: "jahongirmh@gmail.com",
-        from: "jahongirmh@gmail.com",
-        subject: "New message from supremeGrill",
-        html: `<p>This is your password</p>
-        <h1>225036<h1/>
-        <p>Please go to this link to log In your account</p>
-        <a href="#" clicktracking=off>Unknovn@gmail.com</a>`
-        
-      })
+      const result = await sendEmail({
+        from: "asad99@gmail.com",
+        to: "kvadratmetr01@gmail.com",
+        subject: "New request from supremeGrill!",
+        text: message,
+      });
       res.json({
-        messages: "Send Lead"
+        messages: "Your message has been sent!"
       });
     } catch (err) {
-      return res.error.serverErr(res, err);
+      console.log(err);
+      res.json({message: err.message})
     }
   },
   createLead: async (req, res) => {
