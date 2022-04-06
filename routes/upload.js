@@ -11,9 +11,9 @@ cloudinary.config({
 router.post("/upload", (req, res) => {
   try {
     if (!req.files || Object.keys(req.files).length === 0)
-      return res.error.noUpload(res);
+      return res.json('No upload!');
 
-    const file = req.files.file;
+    const file = req.files.files;
     if (file.size > 15 * 1024 * 1024) {
       removeTmp(file.tempFilePath);
       return res.error.invalidSize(res);
@@ -36,7 +36,7 @@ router.post("/upload", (req, res) => {
       }
     );
   } catch (err) {
-    res.error.serverErr(res, err);
+    res.json(err.message);
   }
 });
 

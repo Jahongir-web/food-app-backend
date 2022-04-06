@@ -36,7 +36,7 @@ app.use((_, res, next) => {
 // Routes
 app.use("/api", require("./routes/foodRouter"));
 app.use("/api", require("./routes/leadRouter"));
-app.use("/", require("./routes/upload"));
+app.use("/api", require("./routes/upload"));
 
 const start = async () => {
   try {

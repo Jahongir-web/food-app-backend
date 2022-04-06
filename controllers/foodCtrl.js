@@ -6,7 +6,7 @@ const foodCtrl = {
       const foods = await Food.find({});
       res.json(foods);
     } catch (err) {
-      return res.error.serverErr(res, err);
+      return res.json(err.message);
     }
   },
   createFood: async (req, res) => {
@@ -22,7 +22,7 @@ const foodCtrl = {
 
       res.status(201).json({ message: "Created food" });
     } catch (err) {
-      return res.error.handleError(res, err);
+      return res.json(err.message);
     }
   },
   updateFood: async (req, res) => {
