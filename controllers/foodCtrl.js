@@ -49,9 +49,7 @@ const foodCtrl = {
       );
 
       const { content, image, price } = req.body;
-
-      console.log(content, image, price);
-        
+              
       const newFood = new Food({
         content,
         image,
