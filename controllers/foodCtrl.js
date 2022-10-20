@@ -39,7 +39,7 @@ const foodCtrl = {
         file.tempFilePath,
         { folder: "Food app" },
         async (err, result) => {
-          if (err) throw err;
+          if (err) console.log(err); 
 
           removeTmp(file.tempFilePath);
 
